@@ -1,6 +1,5 @@
 import requests
-from playsound import playsound
-
+import os
 
 url = 'http://10.252.205.112:8008/hit'
 increment = {'id': 1}
@@ -30,4 +29,4 @@ def reset(id):
       print("http post failed") 
 
 def scream():
-   playsound('scream.mp3')
+   os.system("aplay scream.wav")

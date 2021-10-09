@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 from tkinter import *
 from threading import Thread
+
+from FencingFunctions import *
+
 import PySimpleGUI as sg
 import time
 app = Flask(__name__)
@@ -33,12 +36,16 @@ def add_hit():
      scores[id] = scores[id] + recv["value"]
      if recv["value"] == 0:
         scores[id] = 0 
+     if recv["value"] > 0:
+        scream()
   else:
      if numFencers < 2:
         print("New Contender! " + id)
         scores[id] = recv["value"]
         keys[id] = keylist[numFencers]
         numFencers = numFencers + 1
+        if recv["value"] > 0:
+           scream()
   return '', 204
 
 
