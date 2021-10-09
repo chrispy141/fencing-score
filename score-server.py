@@ -18,10 +18,13 @@ def add_hit():
   recv = request.get_json()
   id = recv["id"]
   if id in scores.keys(): 
-     scores[id] = scores[id] + 1
+     
+     scores[id] = scores[id] + recv["value"]
+     if recv["value"] == 0:
+        scores[id] = 0 
   else:
      print("New Contender! " + id)
-     scores[id] = 1
+     scores[id] = recv["value"]
   print_scores()
   return '', 204
 
