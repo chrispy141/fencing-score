@@ -4,7 +4,6 @@ import RPi.GPIO as GPIO
 from FencingFunctions import *
 
 HIT_PIN = 5 
-DEC_PIN = 4
 
 # Create my app
 
@@ -14,36 +13,28 @@ if __name__ == "__main__":
 	id = "goat"
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(HIT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-	GPIO.setup(DEC_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-	timeSinceTouch=0
-	timeSinceDec=0
-	decCount=0
+	touchTime = 0
+	noTouchTime = 9999
+	lastHitState=True
 	while True:
 		hit_state = GPIO.input(HIT_PIN)
-		dec_state = GPIO.input(DEC_PIN)
-		if (hit_state == False ): 
-			if (timeSinceTouch > 50):
-				timeSinceTouch = 0
-				touch(id)
-				print("hit")
-		if (dec_state == False):
-			if timeSinceDec > 10:
-				decCount = decCount + 1
-				
-				if decCount > 3:
-					timeSinceDec=0
-					reset(id)
-					decCount=0		
-					print("reset")
-			if timeSinceDec > 25:
-				decCount=0		
-			if timeSinceDec > 100:
-				timeSinceDec=0
-				decCount=0		
-				removeTouch(id)
-				print("remove touch")
-		timeSinceTouch = timeSinceTouch + 1
-		timeSinceDec = timeSinceDec + 1
+
+		#touch detected	
+		if (hit_state == False):
+			noTouchTime = 0
+			if lastHitState == True: #new touch
+				touchTime = 0;
+			else:
+				touchTime = touchTime + 1		
+		#no touch detected
+		if (hit_state == True):
+			touchTime = 0
+			if lastHitState == False: #touch just released
+				noTouchTime = 0;
+			else:
+				touchTime = touchTime + 1		
+		print("Touch Time: " + str(touchTime))
+		print("Non Touch Time: " + str(noTouchTime))
 		time.sleep(0.02)
 
 
