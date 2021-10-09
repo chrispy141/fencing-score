@@ -9,13 +9,21 @@ reset = {'id': 1}
 
 def touch(id):
    postJson = {'id' : id, 'value' : 1}
-   x = requests.post(url, json = postJson)
-  
+   try:
+      x = requests.post(url, json = postJson)
+   except:
+      print("http post failed") 
 
 def removeTouch(id):
-   postJson = {'id' : id, 'value' : -1}
-   x = requests.post(url, json = postJson)
+   postJson = {'id' : id, 'value' : -2}
+   try:
+      x = requests.post(url, json = postJson)
+   except:
+      print("http post failed") 
 
 def reset(id):
    postJson = {'id' : id, 'value' : 0}
-   x = requests.post(url, json = postJson)
+   try:
+      x = requests.post(url, json = postJson)
+   except:
+      print("http post failed") 
