@@ -35,7 +35,9 @@ if __name__ == "__main__":
 					reset(id)
 					decCount=0		
 					print("reset")
-			if timeSinceDec > 50:
+			if timeSinceDec > 25:
+				decCount=0		
+			if timeSinceDec > 100:
 				timeSinceDec=0
 				decCount=0		
 				removeTouch(id)
