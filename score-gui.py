@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-
+from tkinter import *
 from threading import Thread
 import PySimpleGUI as sg
 import time
@@ -9,13 +9,18 @@ scores = {}
 keys = {}
 keylist = ['-F1-', '-F2-']
 numFencers = 0;
-layout = [[sg.Text("No Fencer yet", key='-F1-' )],[sg.Text("No Fencer Yet", key='-F2-')],[sg.Button("OK")]]
+
+
+layout = [[sg.Text("No Fencer yet",size=(30,5), key='-F1-', font=('Georgia 20') )],[sg.Text("No Fencer Yet",size=(30,5), key='-F2-', font=('Georgia 20'))],[sg.Button("Reset")]]
 window = sg.Window("Goats rock!", layout)
 
-
+def reset_scores():
+   for id in scores.keys():
+      scores[id] = 0
+ 
 def update_scores():
    for id in scores.keys():
-      window[keys[id]].update(id + ":" + str(scores[id]))
+      window[keys[id]].update(id + ":  " + str(scores[id]))
 
 
 @app.route('/hit', methods=['POST'])
@@ -44,8 +49,8 @@ if __name__ == '__main__':
    print("After Thread")
    while True:
       event, values = window.read(timeout=500)
-      if event == "OK":
-         break
+      if event == "Reset":
+         reset_scores()
       if event == sg.WIN_CLOSED:
          break
       update_scores()
