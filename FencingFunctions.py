@@ -1,4 +1,5 @@
 import requests
+from playsound import playsound
 
 
 url = 'http://10.252.205.112:8008/hit'
@@ -27,3 +28,6 @@ def reset(id):
       x = requests.post(url, json = postJson)
    except:
       print("http post failed") 
+
+def scream():
+   playsound('scream.mp3')
