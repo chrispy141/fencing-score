@@ -1,0 +1,9 @@
+[Unit]
+After=network.target auditd.service
+
+[Service]
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/git/fencing-score/touch_checker.py
+
+[Install]
+WantedBy=multi-user.target
