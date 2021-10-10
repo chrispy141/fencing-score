@@ -7,24 +7,26 @@ HIT_PIN = 4
 
 # Create my app
 
+url = getUrl()
+
 # Read in calibration value
 def processTouch(touchTime, noTouchTime):
 	
 	if touchDetected:
 		if touchTime == 300:
 			print("reset")
-			reset("goat")
+			reset(url, "Goat")
 		else:
 			if touchTime == 50:
 				print("remove touch")
-				removeTouch("goat")
+				removeTouch(url, "Goat")
 			else:
 				if noTouchTime > 20:
-					touch("goat")
+					touch(url, "Goat")
 
 
 if __name__ == "__main__":
-	id = "goat"
+	id = "Goat"
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(HIT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	touchTime = 0
