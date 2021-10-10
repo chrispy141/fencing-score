@@ -5,28 +5,28 @@ from FencingFunctions import *
 
 HIT_PIN = 4
 
-# Create my app
-
+fencerName="Goat"
 url = getUrl()
-
+reset(url, fencerName)
+print("Received multicast URL: %s" % url)
 # Read in calibration value
 def processTouch(touchTime, noTouchTime):
 	
 	if touchDetected:
 		if touchTime == 300:
 			print("reset")
-			reset(url, "Goat")
+			reset(url, fencerName)
 		else:
 			if touchTime == 50:
 				print("remove touch")
-				removeTouch(url, "Goat")
+				removeTouch(url, fencerName)
 			else:
 				if noTouchTime > 20:
-					touch(url, "Goat")
+					touch(url, fencerName)
 
 
 if __name__ == "__main__":
-	id = "Goat"
+	id = fencerName
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(HIT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	touchTime = 0
